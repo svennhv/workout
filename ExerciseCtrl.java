@@ -63,12 +63,22 @@ public class ExerciseCtrl extends DBConn {
             Statement stmt = conn.createStatement(); 
             ResultSet rs =  stmt.executeQuery("SELECT MAX(weight) FROM exercise WHERE name = \""+ name + "\" ;");
             while (rs.next()) {
+				name = rs.getInt("name");
+				description = rs.getInt("description");
+				currentGoal = rs.getInt("currentGoal");
+				bestResult = rs.getInt("bestResult");
+				weight = rs.getInt("weight");
+				repetitions = rs.getInt("repetitions");
+				sets = rs.getInt("sets");
+				length = rs.getInt("length");
+				duration = rs.getInt("duration");
+
             	// ! create variables. like in the example under:
             	/*
             	timer = rs.getInt("timer");
             	*/
             }
-            return new Exercise(); //! add variables in constructor
+            return new Exercise(String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration); //! add variables in constructor
         } catch (Exception e) {
             System.out.println("db error during select of Exercise="+e);
             return null;

@@ -9,11 +9,27 @@ import java.util.*;
 
 public class Exercise extends ActiveDomainObject {
 	String name;
+	String description = description;
+	String currentGoal = currentGoal;
+	String bestResult = bestResult;
+	int weight = weight;
+	int repetitions = repetitions;
+	int sets = sets;
+	int length = length;
+	int duration = duration;
     // Add all possible values from database
     
     
-    public Exercise (String name, String duration){ // Create new "exercise type" - Takes in all arguments !add more
-    	
+    public Exercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration){ // Create new "exercise type" - Takes in all arguments !add more
+    	this.name = name;
+		this.description = description;
+		this.currentGoal = currentGoal;
+		this.bestResult = bestResult;
+		this.weight = weight;
+		this.repetitions = repetitions;
+		this.sets = sets;
+		this.length = length;
+		this.duration = duration;
     }
 
     public void regExercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration) { // For log entries
@@ -36,6 +52,17 @@ public class Exercise extends ActiveDomainObject {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM exercise WHERE name=" + name);
             while (rs.next()) {
+				
+				name = rs.getInt("name");
+				description = rs.getInt("description");
+				currentGoal = rs.getInt("currentGoal");
+				bestResult = rs.getInt("bestResult");
+				weight = rs.getInt("weight");
+				repetitions = rs.getInt("repetitions");
+				sets = rs.getInt("sets");
+				length = rs.getInt("length");
+				duration = rs.getInt("duration");
+
             	
             	// get values from database like in the example under
             	
@@ -62,7 +89,9 @@ public class Exercise extends ActiveDomainObject {
     public void save (Connection conn) {
         try {    
             Statement stmt = conn.createStatement(); 
-            stmt.executeUpdate(	// ! add all values/variables...  example:
+            stmt.executeUpdate("insert into exercsie values(NULL," + name + ","+ description + "," + currentGoal + "," + bestResult + "," + weight + "," + repetitions + ","
+			+ sets + "," + length + "," + duration + ") "); //usikker på om NULL skal være med eller ikke.
+					// ! add all values/variables...  example:
             		"insert into exercsie values (NULL,"+startTid+","+timer+","+type+")");
         } catch (Exception e) {
             System.out.println("db error during insert of Exercise="+e);
