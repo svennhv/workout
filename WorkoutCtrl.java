@@ -10,7 +10,10 @@ package workoutA;
  */
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 public class WorkoutCtrl extends DBConn {
     private Workout Workout;
@@ -38,25 +41,33 @@ public class WorkoutCtrl extends DBConn {
     
     
     // Records and special information:
-    public Workout lastWeekSummary(DateTime time){
-        try {
+    public String lastWeekSummary(){  // returns a formatted summa
+        String summary = "";
+    	try {
+        	Date today = new Date();
+   	     	Date lastWeek = new Date(today.getTime() - 7*86400000);
+   	     	TimeZone tz = TimeZone.getTimeZone("UTC");
+   	     	DateFormat df = new SimpleDateFormat("yyyyMMdd");
+   	     	df.setTimeZone(tz);
+   	     	String lastWeekISO = df.format(lastWeek);
+   	     	String sql = "SELECT COUNT(*) AS numberOfWorkouts, SUM(duration) AS timer, AVG(performance) AS Performance, " +
+   	         "FROM workout, " + "WHERE date > " + lastWeekISO + ";";  // !check if sql is correct
             Statement stmt = conn.createStatement(); 
-            ResultSet rs =  stmt.executeQuery("SELECT * FROM Workout WHERE WORKOUTTIME = \""+ name + "\" ;");
+            ResultSet rs =  stmt.executeQuery(sql);
             while (rs.next()) {
             	// ! create variables. like in the example under:
             	/*
             	timer = rs.getInt("timer");
             	*/
+            	
+            	// !add variables to String summary
             }
-            return new Workout(); //! add variables in constructor
+            return summary; //! add variables in constructor
         } catch (Exception e) {
             System.out.println("db error during select of Workout="+e);
             return null;
         }
     }
-    
-    public Workout getFastest(String name){
-    	// !do like in getHeaviest
-    }
+
 
 }
