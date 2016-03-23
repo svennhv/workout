@@ -8,12 +8,34 @@ import java.sql.*;
 import java.util.*;
 
 public class Workout extends ActiveDomainObject {
+	int workoutID;
 	String name;
+	boolean isTemplate;
+	dateTime workoutTime;
+	int duration;
+	int shape;
+	int performance;
+	String workoutnote;
+	String weatherconditions;
+	String airconditions;
+	String numberOfSpectators;
+	
     // Add all possible values from database
     
     
-    public Workout (String name, String duration){ // Create new "Workout type" - Takes in all arguments !add more
-    	
+    public Workout (int workoutID, String name, boolean isTemplate, dateTime workoutTime, int duration, int shape, 
+	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators){ // Create new "Workout type" - Takes in all arguments !add more
+			this.workoutID = workoutID;
+			this.name = name;
+			this.isTemplate = isTemplate;
+			this.workoutTime = workoutTime;
+			this.duration = duration;
+			this.shape = shape;
+			this.performance = performance;
+			this.workoutnote = workoutnote;
+			this.weatherconditions = weatherconditions;
+			this.airconditions = airconditions;
+			this.numberOfSpectators = numberOfSpectators;
     }
 
     public void regWorkout () { // For log entries
