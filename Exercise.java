@@ -16,8 +16,17 @@ public class Exercise extends ActiveDomainObject {
     	
     }
 
-    public void regExercise () { // For log entries
-    	// !save all necessary arguments if it is a log exercise (checkout logentry in the workout.sql)
+    public void regExercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration) { // For log entries
+    	String name = name; 
+		String description = description;
+		String currentGoal = currentGoal;
+		String bestResult = bestResult;
+		int weight = weight;
+		int repetitions = repetitions;
+		int sets = sets;
+		int length = length;
+		int duration = duration;
+		// !save all necessary arguments if it is a log exercise (checkout logentry in the workout.sql)
     }
     
     // FOR CONNECTION:

@@ -28,13 +28,22 @@ public class ExerciseCtrl extends DBConn {
     }
 
     // !convert example to exercise:
-    public void createExercise (){ // ! add arguments
-        exercise = new Exercise (); // ! fill in arguments after Exercise class is finished
+    public void createExercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration){ // ! add arguments !! done
+        String name = name; 
+		String description = description;
+		String currentGoal = currentGoal;
+		String bestResult = bestResult;
+		int weight = weight;
+		int repetitions = repetitions;
+		int sets = sets;
+		int length = length;
+		int duration = duration;
+		exercise = new Exercise ( name, description, currentGoal, bestResult, weight, repetitions, sets, length, duration); // ! fill in arguments after Exercise class is finished !! done
  
     }
-    public void registerExercise(){ // log entry, !arguments
-        exercise = new Exercise (); // ! fill in arguments after Exercise class is finished
-        exercise.regExercise(); // ! add arguments
+    public void registerExercise(String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration){ // log entry, !arguments
+        exercise = new Exercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration); // ! fill in arguments after Exercise class is finished
+        exercise.regExercise(String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration); // ! add arguments
     }
     
     
