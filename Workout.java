@@ -19,7 +19,6 @@ public class Workout extends ActiveDomainObject {
 	String weatherconditions;
 	String airconditions;
 	String numberOfSpectators;
-	
     // Add all possible values from database
     
     
@@ -38,8 +37,20 @@ public class Workout extends ActiveDomainObject {
 			this.numberOfSpectators = numberOfSpectators;
     }
 
-    public void regWorkout () { // For log entries
-    	// !save all necessary arguments if it is a log Workout (checkout logentry in the workout.sql)
+    public void regWorkout (int workoutID, String name, boolean isTemplate, dateTime workoutTime, int duration, int shape, 
+	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators) { // For log entries
+		// !save all necessary arguments if it is a log Workout (checkout logentry in the workout.sql
+		int workoutID;
+		String name;
+		boolean isTemplate;
+		dateTime workoutTime;
+		int duration;
+		int shape;
+		int performance;
+		String workoutnote;
+		String weatherconditions;
+		String airconditions;
+		String numberOfSpectators;
     }
     
     // FOR CONNECTION:
@@ -49,6 +60,10 @@ public class Workout extends ActiveDomainObject {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Workout WHERE name=" + name);
             while (rs.next()) {
+					workoutID = rs.getInt("workoutID");
+					name = rs.getInt("name");
+					isTemplate = rs.getInt("isTemplate");
+			
             	
             	// get values from database like in the example under
             	
