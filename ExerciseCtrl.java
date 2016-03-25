@@ -29,16 +29,29 @@ public class ExerciseCtrl extends DBConn {
         }
     }
 
-    // !convert example to exercise:
     public void createExercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration){ // ! add arguments !! done
 		exercise = new Exercise (name, description, currentGoal, bestResult, weight, repetitions, sets, length, duration); // ! fill in arguments after Exercise class is finished !! done
 		exercise.save(conn);
     }
-    public void registerExercise(Exercise exercise, Workout workout){ // log entry, !arguments
+    public void registerExercise(Exercise exercise, Workout workout){ // log entry
     	// connect to database and make new entry in LOGENTRY
+    	String sql = "";
+    	insert(conn, sql);
     }
     
-    private ArrayList<Exercise> getExercises(String sql){
+    
+    // BASIC FUNCTIONS
+    public void insert(Connection conn, String sql){ // insert sql
+    	try {    
+            Statement stmt = conn.createStatement(); 
+            stmt.executeUpdate(sql);
+
+        } catch (Exception e) {
+            System.out.println("db error during insert ="+e);
+            return;
+        }
+    }
+    private ArrayList<Exercise> getExercises(String sql){ // execute sql query and get exercises
     	ArrayList<Exercise> list = new ArrayList<Exercise>();
     	try {
             Statement stmt = conn.createStatement(); 
@@ -64,39 +77,20 @@ public class ExerciseCtrl extends DBConn {
     }
     
     
-    // Records and special information:
+    // SPECIAL SELECTION:
     public Exercise getHeaviest(String name){
-        try {
-            Statement stmt = conn.createStatement(); 
-            ResultSet rs =  stmt.executeQuery("SELECT MAX(weight) FROM exercise WHERE name = \""+ name + "\" ;");
-            while (rs.next()) {
-            	
-				name = rs.getString("name");
-				String description = rs.getString("description");
-				String currentGoal = rs.getString("currentGoal");
-				String bestResult = rs.getString("bestResult");
-				int weight = rs.getInt("weight");
-				int repetitions = rs.getInt("repetitions");
-				int sets = rs.getInt("sets");
-				int length = rs.getInt("length");
-				int duration = rs.getInt("duration");
-
-	            return new Exercise(name, description, currentGoal, bestResult, weight, repetitions, sets, length, duration); //! add variables in constructor   	
-            }
-            return null;
-        } catch (Exception e) {
-            System.out.println("db error during select of Exercise="+e);
-            return null;
-        }
+        return getExercises("SELECT MAX(weight) FROM exercise WHERE name = "+ stringify(name) +  ";").get(0);
     }
     
     public ArrayList<Exercise> getAll(){
-    	ArrayList<Exercise> list = getExercises("SELECT * FROM exercises;");
+    	ArrayList<Exercise> list = getExercises("SELECT * FROM exercise;");
     	return list;
     }
     
-    public Exercise getFastest(String name){
-    	// !do like in getHeaviest
-    }
 
+    // HELPERS
+    public String stringify(String str){
+    	str = "\"" + str + "\"";
+    	return str;
+    }
 }

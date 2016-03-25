@@ -6,6 +6,7 @@ package workoutA;
 
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 public class Workout extends ActiveDomainObject {
 	int workoutID;
@@ -76,7 +77,7 @@ public class Workout extends ActiveDomainObject {
         try {    
             Statement stmt = conn.createStatement(); 
             stmt.executeUpdate(	// ! add all values/variables...  example:
-            		"insert into exercsie values (NULL,"+startTid+","+timer+","+type+")");
+            		//"insert into exercsie values (NULL,"+startTid+","+timer+","+type+")");
         } catch (Exception e) {
             System.out.println("db error during insert of Workout="+e);
             return;
