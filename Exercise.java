@@ -9,14 +9,14 @@ import java.util.*;
 
 public class Exercise extends ActiveDomainObject {
 	String name;
-	String description = description;
-	String currentGoal = currentGoal;
-	String bestResult = bestResult;
-	int weight = weight;
-	int repetitions = repetitions;
-	int sets = sets;
-	int length = length;
-	int duration = duration;
+	String description;
+	String currentGoal;
+	String bestResult;
+	int weight;
+	int repetitions;
+	int sets;
+	int length;
+	int duration;
     // Add all possible values from database
     
     
@@ -32,16 +32,16 @@ public class Exercise extends ActiveDomainObject {
 		this.duration = duration;
     }
 
-    public void regExercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration) { // For log entries
-    	String name = name; 
-		String description = description;
-		String currentGoal = currentGoal;
-		String bestResult = bestResult;
-		int weight = weight;
-		int repetitions = repetitions;
-		int sets = sets;
-		int length = length;
-		int duration = duration;
+    public void reuseExercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration) { // For log entries
+    	this.name = name; 
+		this.description = description;
+		this.currentGoal = currentGoal;
+		this.bestResult = bestResult;
+		this.weight = weight;
+		this.repetitions = repetitions;
+		this.sets = sets;
+		this.length = length;
+		this.duration = duration;
 		// !save all necessary arguments if it is a log exercise (checkout logentry in the workout.sql)
     }
     
@@ -53,10 +53,10 @@ public class Exercise extends ActiveDomainObject {
             ResultSet rs = stmt.executeQuery("SELECT * FROM exercise WHERE name=" + name);
             while (rs.next()) {
 				
-				name = rs.getInt("name");
-				description = rs.getInt("description");
-				currentGoal = rs.getInt("currentGoal");
-				bestResult = rs.getInt("bestResult");
+				name = rs.getString("name");
+				description = rs.getString("description");
+				currentGoal = rs.getString("currentGoal");
+				bestResult = rs.getString("bestResult");
 				weight = rs.getInt("weight");
 				repetitions = rs.getInt("repetitions");
 				sets = rs.getInt("sets");

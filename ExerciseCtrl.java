@@ -15,15 +15,7 @@ import java.util.*;
 public class ExerciseCtrl extends DBConn {
     private Exercise exercise;
 	
-	    String name = name; 
-		String description = description;
-		String currentGoal = currentGoal;
-		String bestResult = bestResult;
-		int weight = weight;
-		int repetitions = repetitions;
-		int sets = sets;
-		int length = length;
-		int duration = duration;
+
     
 
     public ExerciseCtrl () {
@@ -39,21 +31,36 @@ public class ExerciseCtrl extends DBConn {
 
     // !convert example to exercise:
     public void createExercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration){ // ! add arguments !! done
-		this.name = name;
-		this.description = description;
-		this.currentGoal = currentGoal;
-		this.bestResult = bestResult;
-		this.weight = weight;
-		this.repetitions = repetitions;
-		this.sets = sets;
-		this.length = length;
-		this.duration = duration;
 		exercise = new Exercise (name, description, currentGoal, bestResult, weight, repetitions, sets, length, duration); // ! fill in arguments after Exercise class is finished !! done
- 
+		exercise.save(conn);
     }
-    public void registerExercise(String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration){ // log entry, !arguments
-        exercise = new Exercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration); // ! fill in arguments after Exercise class is finished
-        exercise.regExercise(String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration); // ! add arguments
+    public void registerExercise(Exercise exercise, Workout workout){ // log entry, !arguments
+    	// connect to database and make new entry in LOGENTRY
+    }
+    
+    private ArrayList<Exercise> getExercises(String sql){
+    	ArrayList<Exercise> list = new ArrayList<Exercise>();
+    	try {
+            Statement stmt = conn.createStatement(); 
+            ResultSet rs =  stmt.executeQuery(sql);
+            while (rs.next()) {
+            	
+				String name = rs.getString("name");
+				String description = rs.getString("description");
+				String currentGoal = rs.getString("currentGoal");
+				String bestResult = rs.getString("bestResult");
+				int weight = rs.getInt("weight");
+				int repetitions = rs.getInt("repetitions");
+				int sets = rs.getInt("sets");
+				int length = rs.getInt("length");
+				int duration = rs.getInt("duration");
+	            list.add( new Exercise(name, description, currentGoal, bestResult, weight, repetitions, sets, length, duration) ); //! add variables in constructor   	
+            }
+            return list;
+        } catch (Exception e) {
+            System.out.println("db error during select of Exercise="+e);
+            return null;
+        }
     }
     
     
@@ -63,26 +70,29 @@ public class ExerciseCtrl extends DBConn {
             Statement stmt = conn.createStatement(); 
             ResultSet rs =  stmt.executeQuery("SELECT MAX(weight) FROM exercise WHERE name = \""+ name + "\" ;");
             while (rs.next()) {
-				name = rs.getInt("name");
-				description = rs.getInt("description");
-				currentGoal = rs.getInt("currentGoal");
-				bestResult = rs.getInt("bestResult");
-				weight = rs.getInt("weight");
-				repetitions = rs.getInt("repetitions");
-				sets = rs.getInt("sets");
-				length = rs.getInt("length");
-				duration = rs.getInt("duration");
+            	
+				name = rs.getString("name");
+				String description = rs.getString("description");
+				String currentGoal = rs.getString("currentGoal");
+				String bestResult = rs.getString("bestResult");
+				int weight = rs.getInt("weight");
+				int repetitions = rs.getInt("repetitions");
+				int sets = rs.getInt("sets");
+				int length = rs.getInt("length");
+				int duration = rs.getInt("duration");
 
-            	// ! create variables. like in the example under:
-            	/*
-            	timer = rs.getInt("timer");
-            	*/
+	            return new Exercise(name, description, currentGoal, bestResult, weight, repetitions, sets, length, duration); //! add variables in constructor   	
             }
-            return new Exercise(String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration); //! add variables in constructor
+            return null;
         } catch (Exception e) {
             System.out.println("db error during select of Exercise="+e);
             return null;
         }
+    }
+    
+    public ArrayList<Exercise> getAll(){
+    	ArrayList<Exercise> list = getExercises("SELECT * FROM exercises;");
+    	return list;
     }
     
     public Exercise getFastest(String name){

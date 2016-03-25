@@ -11,7 +11,7 @@ public class Workout extends ActiveDomainObject {
 	int workoutID;
 	String name;
 	boolean isTemplate;
-	dateTime workoutTime;
+	Date workoutTime;
 	int duration;
 	int shape;
 	int performance;
@@ -23,7 +23,7 @@ public class Workout extends ActiveDomainObject {
     // Add all possible values from database
     
     
-    public Workout (int workoutID, String name, boolean isTemplate, dateTime workoutTime, int duration, int shape, 
+    public Workout (int workoutID, String name, boolean isTemplate, Date workoutTime, int duration, int shape, 
 	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators){ // Create new "Workout type" - Takes in all arguments !add more
 			this.workoutID = workoutID;
 			this.name = name;
