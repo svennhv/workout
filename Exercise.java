@@ -115,4 +115,80 @@ public class Exercise extends ActiveDomainObject {
     	str = "\"" + str + "\"";
     	return str;
     }
+
+	
+    
+    // Getters and setters
+    
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getCurrentGoal() {
+		return currentGoal;
+	}
+
+	public void setCurrentGoal(String currentGoal) {
+		this.currentGoal = currentGoal;
+	}
+
+	public String getBestResult() {
+		return bestResult;
+	}
+
+	public void setBestResult(String bestResult) {
+		this.bestResult = bestResult;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	public int getRepetitions() {
+		return repetitions;
+	}
+
+	public void setRepetitions(int repetitions) {
+		this.repetitions = repetitions;
+	}
+
+	public int getSets() {
+		return sets;
+	}
+
+	public void setSets(int sets) {
+		this.sets = sets;
+	}
+
+	public int getLength() {
+		return length;
+	}
+
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
 }

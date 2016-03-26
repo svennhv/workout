@@ -13,7 +13,7 @@ import java.sql.*;
 import java.util.*;
 
 public class ExerciseCtrl extends DBConn {
-    private Exercise exercise;
+    private Exercise exercise; // buffer workout
 	
 
     
@@ -51,7 +51,7 @@ public class ExerciseCtrl extends DBConn {
             return;
         }
     }
-    private ArrayList<Exercise> getExercises(String sql){ // execute sql query and get exercises
+    protected ArrayList<Exercise> getExercises(String sql){ // execute sql query and get exercises
     	ArrayList<Exercise> list = new ArrayList<Exercise>();
     	try {
             Statement stmt = conn.createStatement(); 

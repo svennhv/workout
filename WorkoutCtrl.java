@@ -16,7 +16,8 @@ import java.util.*;
 import java.util.Date;
 
 public class WorkoutCtrl extends DBConn {
-    private Workout Workout;
+    private Workout workout; // buffer workout
+    private ArrayList<Workout> workouts;
     
 
     public WorkoutCtrl () {
@@ -30,44 +31,98 @@ public class WorkoutCtrl extends DBConn {
         }
     }
 
-    public void createWorkout (){ // ! add arguments
-        Workout = new Workout (); // ! fill in arguments after Workout class is finished
+    // For templates:
+    public void createWorkout (String name, int duration, String workoutnote){
+        workout = new Workout (name, true, null, duration, 0, 0, workoutnote, "", "", "");
+        workout.save(conn);
+    }
+    
+    // Registering completed workout
+    public void registerWorkout(Workout workout, int duration, int shape, int performance, String weatherconditions, String airconditions, String numberOfSpectators, String workoutnote){ // log entry, !arguments
+    	Date now = new Date();
+    	workout = new Workout(workout.getName(), false, now, duration, shape, performance, workoutnote, weatherconditions, airconditions, numberOfSpectators);
+        workout.regWorkout(); // ! add arguments
+    }
+    
+    public void addExercise(Workout workout, Exercise exercise){
+    	exercise.getName();
+    	String sql = "INSERT INTO exerciseinworkout (" + stringify(exercise.getName()) + "," + workout.getId() + ")";
+    	insert(conn, sql);
+    }
+    
+    public ArrayList<Exercise> getExercises(Workout workout, ExerciseCtrl eCtrl){
+    	String sql = "SELECT * FROM exerciseinworkout WHERE workoutid = " + workout.getId(); // FIX THIS  - not correct sql
+    	ArrayList<Exercise> list = eCtrl.getExercises(sql);
+    	
  
-    }
-    public void registerWorkout(){ // log entry, !arguments
-        Workout = new Workout (); // ! fill in arguments after Workout class is finished
-        Workout.regWorkout(); // ! add arguments
+    	return list;
     }
     
     
-    // Records and special information:
-    public String lastWeekSummary(){  // returns a formatted summa
-        String summary = "";
+
+    // BASIC FUNCTIONS
+    public void insert(Connection conn, String sql){ // insert sql
+    	try {    
+            Statement stmt = conn.createStatement(); 
+            stmt.executeUpdate(sql);
+
+        } catch (Exception e) {
+            System.out.println("db error during insert ="+e);
+            return;
+        }
+    }
+    private ArrayList<Workout> getWorkouts(String sql){ // execute sql query and get exercises
+    	ArrayList<Workout> list = new ArrayList<Workout>();
     	try {
-        	Date today = new Date();
-   	     	Date lastWeek = new Date(today.getTime() - 7*86400000);
-   	     	TimeZone tz = TimeZone.getTimeZone("UTC");
-   	     	DateFormat df = new SimpleDateFormat("yyyyMMdd");
-   	     	df.setTimeZone(tz);
-   	     	String lastWeekISO = df.format(lastWeek);
-   	     	String sql = "SELECT COUNT(*) AS numberOfWorkouts, SUM(duration) AS timer, AVG(performance) AS Performance, " +
-   	         "FROM workout, " + "WHERE date > " + lastWeekISO + ";";  // !check if sql is correct
             Statement stmt = conn.createStatement(); 
             ResultSet rs =  stmt.executeQuery(sql);
             while (rs.next()) {
-            	// ! create variables. like in the example under:
-            	/*
-            	timer = rs.getInt("timer");
-            	*/
             	
-            	// !add variables to String summary
+            	int id = rs.getInt("id");
+               	String name = rs.getString("name");
+            	Boolean isTemplate = rs.getBoolean("isTemplate");
+            	Date workoutTime = rs.getDate("workoutTime");
+            	int duration = rs.getInt("duration");
+            	int shape = rs.getInt("shape");
+            	int performance = rs.getInt("performance");
+            	String workoutnote = rs.getString("workoutnote");
+            	String weatherconditions = rs.getString("weatherconditions");
+            	String airconditions = rs.getString("airconditions");
+            	String numberOfSpectators = rs.getString("numberOfSpectators");
+				
+	            list.add( new Workout(id, name, isTemplate, workoutTime, duration, shape, 
+	            		performance, workoutnote, weatherconditions, airconditions, numberOfSpectators) ); //! add variables in constructor   	
             }
-            return summary; //! add variables in constructor
+            return list;
         } catch (Exception e) {
-            System.out.println("db error during select of Workout="+e);
+            System.out.println("db error during select of Exercise="+e);
             return null;
         }
     }
+    
+    
+    // SPECIAL SELECTION:
+    public ArrayList<Workout> getAll(){
+    	String sql = "SELECT * FROM workout";
+    	ArrayList<Workout> list = getWorkouts(sql);
+    	return list;
+    }
+    public Workout getLast(){ // returns newest workout
+    	String sql = "SELECT MAX(workoutTime) FROM workout";
+    	return getWorkouts(sql).get(0);
+    }
+    public String lastWeekSummary(){  // returns a formatted summary
+    	String sql = "SELECT * FROM workout";
+    	workouts = getWorkouts(sql);
+        String summary = "";
+    	
+        return summary; //! add variables in constructor
+    }
 
+    // HELPERS
+    public String stringify(String str){
+    	str = "\"" + str + "\"";
+    	return str;
+    }
 
 }
