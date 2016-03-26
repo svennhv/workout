@@ -50,14 +50,18 @@ public class Workout extends ActiveDomainObject {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Workout WHERE name=" + name);
             while (rs.next()) {
-            	
-            	// get values from database like in the example under
-            	
-            	/* example:
-                startTid =  rs.getInt("starttid");
-                timer = rs.getInt("timer");
-                type = rs.getInt("avtaletype");
-                */
+            	workoutID = rs.getInt("workoutID");
+            	name = rs.getString("name");
+            	isTemplate = rs.getBoolean("isTemplate");
+            	workoutTime = rs.getDate("workoutTime");
+            	duration = rs.getInt("duration");
+            	shape = rs.getInt("shape");
+            	performance = rs.getInt("performance");
+            	workoutnote = rs.getString("workoutnote");
+            	weatherconditions = rs.getString("weatherconditions");
+            	airconditions = rs.getString("airconditions");
+            	numberOfSpectators = rs.getString("numberOfSpectators");
+            
             }
 
         } catch (Exception e) {
@@ -71,15 +75,20 @@ public class Workout extends ActiveDomainObject {
     public void refresh (Connection conn) {
         initialize (conn);
     }
-    
+
     @Override
     public void save (Connection conn) {
-        try {    
+        try {
+        	String sql = "INSERT INTO workout values("+ workoutID + "," + stringify(name) +","+ isTemplate +","
+        			+workoutTime +","+ duration +","+ shape + ","+ performance +","+ shape +","+ performance +","
+        			+stringify(workoutnote) +","+ stringify(weatherconditions) +","+ stringify(airconditions) +","
+        			+stringify(numberOfSpectators) +");";
+        			
             Statement stmt = conn.createStatement(); 
-            stmt.executeUpdate(	// ! add all values/variables...  example:
-            		//"insert into exercsie values (NULL,"+startTid+","+timer+","+type+")");
+            stmt.executeUpdate(sql);
+
         } catch (Exception e) {
-            System.out.println("db error during insert of Workout="+e);
+            System.out.println("db error during insert of Exercise="+e);
             return;
         }
         /* FROM EXAMPLE:
@@ -94,5 +103,12 @@ public class Workout extends ActiveDomainObject {
             }
         }
         */
+    }
+    
+    // HELPERS
+    
+    public String stringify(String str){
+    	str = "\"" + str + "\"";
+    	return str;
     }
 }

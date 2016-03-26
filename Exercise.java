@@ -69,14 +69,6 @@ public class Exercise extends ActiveDomainObject {
 				length = rs.getInt("length");
 				duration = rs.getInt("duration");
 
-            	
-            	// get values from database like in the example under
-            	
-            	/* example:
-                startTid =  rs.getInt("starttid");
-                timer = rs.getInt("timer");
-                type = rs.getInt("avtaletype");
-                */
             }
 
         } catch (Exception e) {
