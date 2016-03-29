@@ -5,7 +5,6 @@
 package workoutA;
 
 import java.sql.*;
-import java.util.*;
 import java.util.Date;
 
 public class Workout extends ActiveDomainObject {
@@ -22,9 +21,8 @@ public class Workout extends ActiveDomainObject {
 	private String numberOfSpectators;
 	
     // Add all possible values from database
-    
     public Workout (int id, String name, boolean isTemplate, Date workoutTime, int duration, int shape, 
-	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators){ // Create new "Workout type" - Takes in all arguments !add more
+	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators){ // Create new "Workout type" - for construction from database
 			this.id = id;
 			this.name = name;
 			this.isTemplate = isTemplate;
@@ -37,8 +35,9 @@ public class Workout extends ActiveDomainObject {
 			this.airconditions = airconditions;
 			this.numberOfSpectators = numberOfSpectators;
     }
+    
     public Workout (String name, boolean isTemplate, Date workoutTime, int duration, int shape, 
-	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators){ // Create new "Workout type" - Takes in all arguments !add more
+	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators){ // Create new "Workout type" - for construction by user
 			this.name = name;
 			this.isTemplate = isTemplate;
 			this.workoutTime = workoutTime;

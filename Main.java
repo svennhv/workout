@@ -8,7 +8,9 @@ public class Main {
 		eCtrl.createExercise("squats", "work hard, play hard", "100kg", "90kg x3", 70, 3, 1, 0, 0);
 		System.out.println(eCtrl.getAll());
 		System.out.println(wCtrl.getAll());
-		wCtrl.createWorkout("Legday", 120, "Best day...");
-		wCtrl.addExercise(wCtrl.getLast(), eCtrl.getAll().get(0));
+		System.out.println("..");
+		//wCtrl.createWorkout("Legday", 120, "Best day...");
+		System.out.println(wCtrl.getLast());
+		//wCtrl.addExercise(wCtrl.getLast(), eCtrl.getAll().get(0)))
 	}
 }

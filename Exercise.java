@@ -5,7 +5,6 @@
 package workoutA;
 
 import java.sql.*;
-import java.util.*;
 
 public class Exercise extends ActiveDomainObject {
 	String name;
@@ -50,6 +49,7 @@ public class Exercise extends ActiveDomainObject {
     	String str = "Name: " + name + ", description: " + description;
     	return str;
     }
+    
     
     // FOR CONNECTION:
     @Override

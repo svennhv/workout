@@ -17,7 +17,7 @@ import java.util.Date;
 
 public class WorkoutCtrl extends DBConn {
     private Workout workout; // buffer workout
-    private ArrayList<Workout> workouts;
+    //private ArrayList<Workout> workouts;
     
 
     public WorkoutCtrl () {
@@ -33,6 +33,7 @@ public class WorkoutCtrl extends DBConn {
 
     // For templates:
     public void createWorkout (String name, int duration, String workoutnote){
+    	System.out.println("Creating workut");
         workout = new Workout (name, true, null, duration, 0, 0, workoutnote, "", "", "");
         workout.save(conn);
     }
@@ -77,7 +78,6 @@ public class WorkoutCtrl extends DBConn {
             Statement stmt = conn.createStatement(); 
             ResultSet rs =  stmt.executeQuery(sql);
             while (rs.next()) {
-            	
             	int id = rs.getInt("id");
                	String name = rs.getString("name");
             	Boolean isTemplate = rs.getBoolean("isTemplate");
