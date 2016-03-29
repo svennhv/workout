@@ -114,7 +114,7 @@ public class WorkoutCtrl extends DBConn {
     public String lastWeekSummary(){  // returns a formatted summary
     	String sql = 'SELECT * FROM TABLENAME WHERE DateTime >= ' + this.getWeekStart() + ' AND DateTime <= ' + this.getNowString() + '';
     	workouts = getWorkouts(sql);
-        String summary = "Last weeks workouts: " + workouts;
+        String summary = "Last weeks workouts: " + workouts.toString();
     	
         return summary; //! add variables in constructor
     }
