@@ -116,7 +116,7 @@ public class WorkoutCtrl extends DBConn {
     	return getWorkouts(sql).get(0);
     }
     public String lastWeekSummary(){  // returns a formatted summary
-    	String sql = "SELECT * FROM workout WHERE workouttime >= " + stringify(this.getWeekStart()) + " AND workouttime <= " + stringify(this.getNowString()) + "";
+    	String sql = "SELECT * FROM workout WHERE workouttime >= '" + stringify(this.getWeekStart()) + "' AND workouttime <= '" + stringify(this.getNowString()) + "'";
     	workouts = getWorkouts(sql);
     	System.out.println("doing sql: " + sql); // debugging
         String summary = "Last weeks workouts: " + workouts.toString();
