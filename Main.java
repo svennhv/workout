@@ -18,14 +18,24 @@ public class Main {
 		System.out.println("All exercsises:" + eCtrl.getAll());
 		System.out.println("All workouts:" + wCtrl.getAll());
 		System.out.println("..");
-		wCtrl.createWorkout("Legday", 120, "Best day...");
-		System.out.println(wCtrl.getLast());
+		
+		wCtrl.createWorkout("running", 120, "running is good");
+		wCtrl.registerWorkout("running", 120, 9, 0, "good", "", "", "");
+		System.out.println("All workouts:" + wCtrl.getAll());
+
+		System.out.println(wCtrl.getWeekStart());
+		System.out.println(wCtrl.lastWeekSummary());
+		
+		
+		//wCtrl.createWorkout("Legday", 120, "Best day...");		
+		//System.out.println(wCtrl.getLast());
 		//wCtrl.addExercise(wCtrl.getLast(), eCtrl.getAll().get(0)))
 	}
 	
 	
 	
-	/*
+	/*  FOR USER INTERACTION:
+	 * 
 	public static void main(String[] args){
 		ExerciseCtrl ex = new ExerciseCtrl();
 		WorkoutCtrl work = new WorkoutCtrl();
@@ -156,12 +166,6 @@ public class Main {
 		}
 	}
 
-	
-	// HELPERS:
-	 * 
-	 * 
-	 * 
-	 * 
-	*/
+*/
 
 	}

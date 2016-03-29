@@ -26,17 +26,17 @@ public class WorkoutCtrl extends DBConn {
     }
 
     // For templates:
-    public void createWorkout (String name, int duration, String workoutnote){
+    public void createWorkout (String name, int duration, String workoutnote){ // create new workout template
     	System.out.println("Creating workut");
-        workout = new Workout (name, true, null, duration, 0, 0, workoutnote, "", "", "");
+        workout = new Workout (name, duration, workoutnote);
         workout.save(conn);
     }
     
     // Registering completed workout
-    public void registerWorkout(Workout workout, int duration, int shape, int performance, String weatherconditions, String airconditions, String numberOfSpectators, String workoutnote){ // log entry, !arguments
-    	Date now = new Date();
-    	workout = new Workout(workout.getName(), false, now, duration, shape, performance, workoutnote, weatherconditions, airconditions, numberOfSpectators);
-        //workout.regWorkout(); // ! add arguments
+    public void registerWorkout(String name, int duration, int shape, int performance, String weatherconditions, String airconditions, String numberOfSpectators, String workoutnote){
+    	workout = new Workout(name, duration, workoutnote);
+    	// save something to logentry in sql??
+        workout.regWorkout(duration, shape, performance, workoutnote, weatherconditions, airconditions, numberOfSpectators);
     }
     
     public void addExercise(Workout workout, Exercise exercise){
@@ -116,11 +116,12 @@ public class WorkoutCtrl extends DBConn {
     	return getWorkouts(sql).get(0);
     }
     public String lastWeekSummary(){  // returns a formatted summary
-    	String sql = 'SELECT * FROM TABLENAME WHERE DateTime >= ' + this.getWeekStart() + ' AND DateTime <= ' + this.getNowString() + '';
+    	String sql = "SELECT * FROM workout WHERE workouttime >= " + stringify(this.getWeekStart()) + " AND workouttime <= " + stringify(this.getNowString()) + "";
     	workouts = getWorkouts(sql);
+    	System.out.println("doing sql: " + sql); // debugging
         String summary = "Last weeks workouts: " + workouts.toString();
     	
-        return summary; //! add variables in constructor
+        return summary;
     }
 
     // HELPERS

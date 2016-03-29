@@ -5,6 +5,7 @@
 package workout;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Workout extends ActiveDomainObject {
@@ -13,13 +14,14 @@ public class Workout extends ActiveDomainObject {
 	private String name;
 	private boolean isTemplate;
 	private Date workoutTime;
+	private String timeString = "NULL";
 	private int duration;
 	private int shape;
 	private int performance;
 	private String workoutnote;
 	private String weatherconditions;
 	private String airconditions;
-	private String numberOfSpectators;
+	private String numberOfSpectators = "0";
 	
     // Add all possible values from database
     public Workout (int id, String name, boolean isTemplate, Date workoutTime, int duration, int shape, 
@@ -37,27 +39,18 @@ public class Workout extends ActiveDomainObject {
 			this.numberOfSpectators = numberOfSpectators;
     }
     
-    public Workout (String name, boolean isTemplate, Date workoutTime, int duration, int shape, 
-	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators){ // Create new "Workout type" - for construction by user
+    public Workout (String name, int duration, String workoutnote){ // Create new "Workout type" - for construction by user
 			this.name = name;
-			this.isTemplate = isTemplate;
-			this.workoutTime = workoutTime;
+			this.isTemplate = true;
 			this.duration = duration;
-			this.shape = shape;
-			this.performance = performance;
 			this.workoutnote = workoutnote;
-			this.weatherconditions = weatherconditions;
-			this.airconditions = airconditions;
-			this.numberOfSpectators = numberOfSpectators;
     }
 
-    public void regWorkout (int workoutID, String name, boolean isTemplate, Date workoutTime, int duration, int shape, 
+    public void regWorkout ( int duration, int shape, 
 	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators) { // For log entries
 		// !save all necessary arguments if it is a log Workout (checkout logentry in the workout.sql
-		id = workoutID;
-		this.name = name;
-		this.isTemplate = isTemplate;
-		this.workoutTime =  workoutTime;
+		this.isTemplate = false;
+		this.timeString =  getNowString();
 		this.duration = duration;
 		this.shape = shape;
 		this.performance =  performance;
@@ -111,9 +104,11 @@ public class Workout extends ActiveDomainObject {
 
     @Override
     public void save (Connection conn) {
+
         try {
-        	String sql = "INSERT INTO workout values("+ id + "," + stringify(name) +","+ isTemplate +","
-        			+workoutTime +","+ duration +","+ shape + ","+ performance +","+ shape +","+ performance +","
+        	String sql = "INSERT INTO workout (id, name, istemplate, workouttime, duration, shape, performance, workoutnote, weatherconditions, airconditions, numberofspectators)"
+        			+ "values ("+ id + "," + stringify(name) +","+ isTemplate +","
+        			+timeString +","+ duration +","+ shape + ","+ performance +","
         			+stringify(workoutnote) +","+ stringify(weatherconditions) +","+ stringify(airconditions) +","
         			+stringify(numberOfSpectators) +");";
         			
@@ -132,6 +127,10 @@ public class Workout extends ActiveDomainObject {
     	str = "\"" + str + "\"";
     	return str;
     }
+	public String getNowString(){
+		String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(new java.util.Date());
+		return timeStamp;
+	}
     
     
     // Getters and setters
