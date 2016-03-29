@@ -5,7 +5,6 @@
 package workout;
 
 import java.sql.*;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
@@ -37,7 +36,7 @@ public class WorkoutCtrl extends DBConn {
     public void registerWorkout(Workout workout, int duration, int shape, int performance, String weatherconditions, String airconditions, String numberOfSpectators, String workoutnote){ // log entry, !arguments
     	Date now = new Date();
     	workout = new Workout(workout.getName(), false, now, duration, shape, performance, workoutnote, weatherconditions, airconditions, numberOfSpectators);
-        workout.regWorkout(); // ! add arguments
+        //workout.regWorkout(); // ! add arguments
     }
     
     public void addExercise(Workout workout, Exercise exercise){
@@ -53,6 +52,16 @@ public class WorkoutCtrl extends DBConn {
  
     	return list;
     }
+    /*
+    public Workout getWorkout(String name){
+		ArrayList<Workout> workouts = getAll();
+		for(Workout workout : workouts){
+			if (workout.getName().equals(name) ){
+				return workout;
+			}
+			else return new Workout();
+		}
+    }*/
     
     
 

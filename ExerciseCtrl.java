@@ -12,6 +12,8 @@ package workout;
 import java.sql.*;
 import java.util.*;
 
+import jdk.nashorn.internal.runtime.ECMAException;
+
 public class ExerciseCtrl extends DBConn {
     private Exercise exercise; // buffer workout
 	
@@ -51,6 +53,7 @@ public class ExerciseCtrl extends DBConn {
             return;
         }
     }
+
     protected ArrayList<Exercise> getExercises(String sql){ // execute sql query and get exercises
     	ArrayList<Exercise> list = new ArrayList<Exercise>();
     	try {
@@ -75,6 +78,17 @@ public class ExerciseCtrl extends DBConn {
             return null;
         }
     }
+    
+    /*
+	public Exercise getExercise(String name) {
+		ArrayList<Exercise> exercises = getAll();
+		for(Exercise exercise : exercises){
+			if (exercise.getName().equals(name) ){
+				return exercise;
+			}
+			else throw new Exception("No match to exercise: " + name);
+		}
+	}*/
     
     
     // SPECIAL SELECTION:
