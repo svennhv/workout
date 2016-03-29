@@ -131,7 +131,7 @@ public class WorkoutCtrl extends DBConn {
 	}
 	
 	public String getWeekStart(){
-		long millis = System.currentTimeMillis() % 1000;
+		long millis = System.currentTimeMillis();
 		long lastWeekMillis = millis - 604800000;
 		Date date=new Date(lastWeekMillis);
 		String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(date);
