@@ -116,9 +116,9 @@ public class WorkoutCtrl extends DBConn {
     	return getWorkouts(sql).get(0);
     }
     public String lastWeekSummary(){  // returns a formatted summary
-    	String sql = "SELECT * FROM workout";
+    	String sql = 'SELECT * FROM TABLENAME WHERE DateTime >= ' + this.getWeekStart() + ' AND DateTime <= ' + this.getNowString() + '';
     	workouts = getWorkouts(sql);
-        String summary = "";
+        String summary = "Last weeks workouts: " + workouts.toString();
     	
         return summary; //! add variables in constructor
     }
@@ -130,15 +130,15 @@ public class WorkoutCtrl extends DBConn {
     }
 	
 	public String getNowString(){
-		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+		String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(new java.util.Date());
 		return timeStamp;
 	}
 	
 	public String getWeekStart(){
-		long millis = System.currentTimeMillis() % 1000;
+		long millis = System.currentTimeMillis();
 		long lastWeekMillis = millis - 604800000;
 		Date date=new Date(lastWeekMillis);
-		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(date);
+		String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(date);
 		return timeStamp;
 	}
 	
