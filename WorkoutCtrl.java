@@ -2,12 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package workoutA;
-
-/**
- *
- * @author sveinbra
- */
+package workout;
 
 import java.sql.*;
 import java.text.DateFormat;
@@ -17,7 +12,7 @@ import java.util.Date;
 
 public class WorkoutCtrl extends DBConn {
     private Workout workout; // buffer workout
-    //private ArrayList<Workout> workouts;
+    private ArrayList<Workout> workouts;
     
 
     public WorkoutCtrl () {

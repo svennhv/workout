@@ -4,7 +4,7 @@
  */
 
 
-package workoutA;
+package workout;
 
 /**
  *

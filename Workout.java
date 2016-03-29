@@ -2,25 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package workoutA;
+package workout;
 
 import java.sql.*;
 import java.util.Date;
 
 public class Workout extends ActiveDomainObject {
-<<<<<<< HEAD
-	int workoutID;
-	String name;
-	boolean isTemplate;
-	dateTime workoutTime;
-	int duration;
-	int shape;
-	int performance;
-	String workoutnote;
-	String weatherconditions;
-	String airconditions;
-	String numberOfSpectators;
-=======
+
 	private int id;
 	private String name;
 	private boolean isTemplate;
@@ -33,7 +21,6 @@ public class Workout extends ActiveDomainObject {
 	private String airconditions;
 	private String numberOfSpectators;
 	
->>>>>>> origin/master
     // Add all possible values from database
     public Workout (int id, String name, boolean isTemplate, Date workoutTime, int duration, int shape, 
 	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators){ // Create new "Workout type" - for construction from database
@@ -64,26 +51,21 @@ public class Workout extends ActiveDomainObject {
 			this.numberOfSpectators = numberOfSpectators;
     }
 
-<<<<<<< HEAD
-    public void regWorkout (int workoutID, String name, boolean isTemplate, dateTime workoutTime, int duration, int shape, 
+    public void regWorkout (int workoutID, String name, boolean isTemplate, Date workoutTime, int duration, int shape, 
 	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators) { // For log entries
 		// !save all necessary arguments if it is a log Workout (checkout logentry in the workout.sql
-		int workoutID;
-		String name;
-		boolean isTemplate;
-		dateTime workoutTime;
-		int duration;
-		int shape;
-		int performance;
-		String workoutnote;
-		String weatherconditions;
-		String airconditions;
-		String numberOfSpectators;
-=======
+		id = workoutID;
+		this.name = name;
+		this.isTemplate = isTemplate;
+		this.workoutTime =  workoutTime;
+		this.duration = duration;
+		this.shape = shape;
+		this.performance =  performance;
+		this.workoutnote = workoutnote;
+		this.weatherconditions =  weatherconditions;
+		this.airconditions = airconditions;
+		this.numberOfSpectators =  numberOfSpectators;
 
-	public void regWorkout () { // For log entries
-    	// !save all necessary arguments if it is a log Workout (checkout logentry in the workout.sql)
->>>>>>> origin/master
     }
     
     @Override
@@ -101,20 +83,7 @@ public class Workout extends ActiveDomainObject {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Workout WHERE name=" + name);
             while (rs.next()) {
-<<<<<<< HEAD
-					workoutID = rs.getInt("workoutID");
-					name = rs.getInt("name");
-					isTemplate = rs.getInt("isTemplate");
-			
-            	
-            	// get values from database like in the example under
-            	
-            	/* example:
-                startTid =  rs.getInt("starttid");
-                timer = rs.getInt("timer");
-                type = rs.getInt("avtaletype");
-                */
-=======
+
             	id = rs.getInt("ID");
             	name = rs.getString("name");
             	isTemplate = rs.getBoolean("isTemplate");
@@ -126,8 +95,6 @@ public class Workout extends ActiveDomainObject {
             	weatherconditions = rs.getString("weatherconditions");
             	airconditions = rs.getString("airconditions");
             	numberOfSpectators = rs.getString("numberOfSpectators");
-            
->>>>>>> origin/master
             }
 
         } catch (Exception e) {
@@ -157,18 +124,6 @@ public class Workout extends ActiveDomainObject {
             System.out.println("db error during insert of Exercise="+e);
             return;
         }
-        /* FROM EXAMPLE:
-         * not necessary?
-        for (int i=0;i<brukere.size();i++) {
-            try {    
-                Statement stmt = conn.createStatement(); 
-                stmt.executeUpdate("insert into HarAvtale values ("+brukere.get(i).getBid()+",LAST_INSERT_ID())");
-            } catch (Exception e) {
-                System.out.println("db error during insert of HarAvtale="+e);
-                return;
-            }
-        }
-        */
     }
     
     // HELPERS
