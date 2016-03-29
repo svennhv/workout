@@ -9,14 +9,14 @@ import java.util.*;
 
 public class Exercise extends ActiveDomainObject {
 	String name;
-	String description = description;
-	String currentGoal = currentGoal;
-	String bestResult = bestResult;
-	int weight = weight;
-	int repetitions = repetitions;
-	int sets = sets;
-	int length = length;
-	int duration = duration;
+	String description;
+	String currentGoal;
+	String bestResult;
+	int weight;
+	int repetitions;
+	int sets;
+	int length;
+	int duration;
     // Add all possible values from database
     
     
@@ -32,17 +32,23 @@ public class Exercise extends ActiveDomainObject {
 		this.duration = duration;
     }
 
-    public void regExercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration) { // For log entries
-    	String name = name; 
-		String description = description;
-		String currentGoal = currentGoal;
-		String bestResult = bestResult;
-		int weight = weight;
-		int repetitions = repetitions;
-		int sets = sets;
-		int length = length;
-		int duration = duration;
+    public void reuseExercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration) { // For log entries
+    	this.name = name; 
+		this.description = description;
+		this.currentGoal = currentGoal;
+		this.bestResult = bestResult;
+		this.weight = weight;
+		this.repetitions = repetitions;
+		this.sets = sets;
+		this.length = length;
+		this.duration = duration;
 		// !save all necessary arguments if it is a log exercise (checkout logentry in the workout.sql)
+    }
+    
+    @Override
+    public String toString(){
+    	String str = "Name: " + name + ", description: " + description;
+    	return str;
     }
     
     // FOR CONNECTION:
@@ -53,24 +59,16 @@ public class Exercise extends ActiveDomainObject {
             ResultSet rs = stmt.executeQuery("SELECT * FROM exercise WHERE name=" + name);
             while (rs.next()) {
 				
-				name = rs.getInt("name");
-				description = rs.getInt("description");
-				currentGoal = rs.getInt("currentGoal");
-				bestResult = rs.getInt("bestResult");
+				name = rs.getString("name");
+				description = rs.getString("description");
+				currentGoal = rs.getString("currentGoal");
+				bestResult = rs.getString("bestResult");
 				weight = rs.getInt("weight");
 				repetitions = rs.getInt("repetitions");
 				sets = rs.getInt("sets");
 				length = rs.getInt("length");
 				duration = rs.getInt("duration");
 
-            	
-            	// get values from database like in the example under
-            	
-            	/* example:
-                startTid =  rs.getInt("starttid");
-                timer = rs.getInt("timer");
-                type = rs.getInt("avtaletype");
-                */
             }
 
         } catch (Exception e) {
@@ -87,12 +85,12 @@ public class Exercise extends ActiveDomainObject {
     
     @Override
     public void save (Connection conn) {
-        try {    
+        try {
+        	String sql = "INSERT INTO exercise values("+ stringify(name) + ","+ stringify(description) + "," + stringify(currentGoal) + "," + stringify(bestResult) + "," + weight + "," + repetitions + ","
+        			+ sets + "," + length + "," + duration + ") ;";
             Statement stmt = conn.createStatement(); 
-            stmt.executeUpdate("insert into exercsie values(NULL," + name + ","+ description + "," + currentGoal + "," + bestResult + "," + weight + "," + repetitions + ","
-			+ sets + "," + length + "," + duration + ") "); //usikker på om NULL skal være med eller ikke.
-					// ! add all values/variables...  example:
-            		"insert into exercsie values (NULL,"+startTid+","+timer+","+type+")");
+            stmt.executeUpdate(sql);
+
         } catch (Exception e) {
             System.out.println("db error during insert of Exercise="+e);
             return;
@@ -110,4 +108,87 @@ public class Exercise extends ActiveDomainObject {
         }
         */
     }
+    
+    // HELPERS
+    
+    public String stringify(String str){
+    	str = "\"" + str + "\"";
+    	return str;
+    }
+
+	
+    
+    // Getters and setters
+    
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getCurrentGoal() {
+		return currentGoal;
+	}
+
+	public void setCurrentGoal(String currentGoal) {
+		this.currentGoal = currentGoal;
+	}
+
+	public String getBestResult() {
+		return bestResult;
+	}
+
+	public void setBestResult(String bestResult) {
+		this.bestResult = bestResult;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	public int getRepetitions() {
+		return repetitions;
+	}
+
+	public void setRepetitions(int repetitions) {
+		this.repetitions = repetitions;
+	}
+
+	public int getSets() {
+		return sets;
+	}
+
+	public void setSets(int sets) {
+		this.sets = sets;
+	}
+
+	public int getLength() {
+		return length;
+	}
+
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
 }
