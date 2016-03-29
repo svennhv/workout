@@ -8,6 +8,19 @@ import java.sql.*;
 import java.util.Date;
 
 public class Workout extends ActiveDomainObject {
+<<<<<<< HEAD
+	int workoutID;
+	String name;
+	boolean isTemplate;
+	dateTime workoutTime;
+	int duration;
+	int shape;
+	int performance;
+	String workoutnote;
+	String weatherconditions;
+	String airconditions;
+	String numberOfSpectators;
+=======
 	private int id;
 	private String name;
 	private boolean isTemplate;
@@ -20,6 +33,7 @@ public class Workout extends ActiveDomainObject {
 	private String airconditions;
 	private String numberOfSpectators;
 	
+>>>>>>> origin/master
     // Add all possible values from database
     public Workout (int id, String name, boolean isTemplate, Date workoutTime, int duration, int shape, 
 	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators){ // Create new "Workout type" - for construction from database
@@ -50,9 +64,26 @@ public class Workout extends ActiveDomainObject {
 			this.numberOfSpectators = numberOfSpectators;
     }
 
+<<<<<<< HEAD
+    public void regWorkout (int workoutID, String name, boolean isTemplate, dateTime workoutTime, int duration, int shape, 
+	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators) { // For log entries
+		// !save all necessary arguments if it is a log Workout (checkout logentry in the workout.sql
+		int workoutID;
+		String name;
+		boolean isTemplate;
+		dateTime workoutTime;
+		int duration;
+		int shape;
+		int performance;
+		String workoutnote;
+		String weatherconditions;
+		String airconditions;
+		String numberOfSpectators;
+=======
 
 	public void regWorkout () { // For log entries
     	// !save all necessary arguments if it is a log Workout (checkout logentry in the workout.sql)
+>>>>>>> origin/master
     }
     
     @Override
@@ -70,6 +101,20 @@ public class Workout extends ActiveDomainObject {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Workout WHERE name=" + name);
             while (rs.next()) {
+<<<<<<< HEAD
+					workoutID = rs.getInt("workoutID");
+					name = rs.getInt("name");
+					isTemplate = rs.getInt("isTemplate");
+			
+            	
+            	// get values from database like in the example under
+            	
+            	/* example:
+                startTid =  rs.getInt("starttid");
+                timer = rs.getInt("timer");
+                type = rs.getInt("avtaletype");
+                */
+=======
             	id = rs.getInt("ID");
             	name = rs.getString("name");
             	isTemplate = rs.getBoolean("isTemplate");
@@ -82,6 +127,7 @@ public class Workout extends ActiveDomainObject {
             	airconditions = rs.getString("airconditions");
             	numberOfSpectators = rs.getString("numberOfSpectators");
             
+>>>>>>> origin/master
             }
 
         } catch (Exception e) {
