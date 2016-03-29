@@ -128,7 +128,7 @@ public class Workout extends ActiveDomainObject {
     	return str;
     }
 	public String getNowString(){
-		String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(new java.util.Date());
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new java.util.Date());
 		return timeStamp;
 	}
     

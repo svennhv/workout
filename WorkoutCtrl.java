@@ -131,7 +131,7 @@ public class WorkoutCtrl extends DBConn {
     }
 	
 	public String getNowString(){
-		String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(new java.util.Date());
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new java.util.Date());
 		return timeStamp;
 	}
 	
@@ -139,7 +139,7 @@ public class WorkoutCtrl extends DBConn {
 		long millis = System.currentTimeMillis();
 		long lastWeekMillis = millis - 604800000;
 		Date date=new Date(lastWeekMillis);
-		String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a").format(date);
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(date);
 		return timeStamp;
 	}
 	
