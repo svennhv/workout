@@ -20,7 +20,7 @@ public class Exercise extends ActiveDomainObject {
     
     
     public Exercise (String name, String description, String currentGoal, String bestResult, int weight, int repetitions, int sets, int length, int duration){ // Create new "exercise type" - Takes in all arguments !add more
-    	this.name = name;
+    	this.name = name.toLowerCase();
 		this.description = description;
 		this.currentGoal = currentGoal;
 		this.bestResult = bestResult;

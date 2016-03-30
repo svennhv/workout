@@ -79,26 +79,22 @@ public class ExerciseCtrl extends DBConn {
         }
     }
     
-    /*
-	public Exercise getExercise(String name) {
-		ArrayList<Exercise> exercises = getAll();
-		for(Exercise exercise : exercises){
-			if (exercise.getName().equals(name) ){
-				return exercise;
-			}
-			else throw new Exception("No match to exercise: " + name);
-		}
-	}*/
     
     
     // SPECIAL SELECTION:
-    public Exercise getHeaviest(String name){
-        return getExercises("SELECT MAX(weight) FROM exercise WHERE name = "+ stringify(name) +  ";").get(0);
+    public Exercise getFastest(String name){
+        return getExercises("SELECT MIN(duration) FROM exercise WHERE name = "+ stringify(name) +  ";").get(0);
     }
     
     public ArrayList<Exercise> getAll(){
     	ArrayList<Exercise> list = getExercises("SELECT * FROM exercise;");
     	return list;
+    }
+    
+    public Exercise getExercise(String name){
+    	name = name.toLowerCase();
+    	Exercise ex = getExercises("SELECT * FROM exercise WHERE name=\'" + name + "\';").get(0);
+    	return ex;
     }
     
 

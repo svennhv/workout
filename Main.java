@@ -7,29 +7,39 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/*
+NOTES:
+
+All names should be converted to lower case before use in database.
+
+ */
 
 public class Main {
 	
 	public static void main(String[] args) { // for testing
 		ExerciseCtrl eCtrl = new ExerciseCtrl();
 		WorkoutCtrl wCtrl = new WorkoutCtrl();
-		System.out.println("All exercises: " + eCtrl.getAll());
-		eCtrl.createExercise("squats", "work hard, play hard", "100kg", "90kg x3", 70, 3, 1, 0, 0);
-		System.out.println("All exercsises:" + eCtrl.getAll());
-		System.out.println("All workouts:" + wCtrl.getAll());
-		System.out.println("..");
-		
-		wCtrl.createWorkout("running", 120, "running is good");
-		wCtrl.registerWorkout("running", 120, 9, 0, "good", "", "", "");
-		System.out.println("All workouts:" + wCtrl.getAll());
 
-		System.out.println(wCtrl.getWeekStart());
-		System.out.println(wCtrl.lastWeekSummary());
+		System.out.println(eCtrl.getAll());
+		System.out.println(wCtrl.getAll());
+		System.out.println(wCtrl.getWorkout("strength"));
+		
+		wCtrl.createWorkout("mondays", 120, "I love mondays");
+		System.out.println(wCtrl.getAll());
+		System.out.println(wCtrl.getWorkout("mondays"));
 		
 		
-		//wCtrl.createWorkout("Legday", 120, "Best day...");		
-		//System.out.println(wCtrl.getLast());
-		//wCtrl.addExercise(wCtrl.getLast(), eCtrl.getAll().get(0)))
+		eCtrl.createExercise("squats", "weight lift", null, null, 90, 3, 10, 0, 0);
+		System.out.println(eCtrl.getExercise("squats"));
+		
+		
+		System.out.println("works?..");
+		System.out.println();
+		//testing
+		wCtrl.addExercise(wCtrl.getWorkout("mondays"), eCtrl.getExercise("squats"));
+		System.out.println("inserted");
+		System.out.println(wCtrl.getExercises(wCtrl.getWorkout("mondays"), eCtrl));
+		
 	}
 	
 	

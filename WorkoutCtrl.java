@@ -33,23 +33,29 @@ public class WorkoutCtrl extends DBConn {
     }
     
     // Registering completed workout
-    public void registerWorkout(String name, int duration, int shape, int performance, String weatherconditions, String airconditions, String numberOfSpectators, String workoutnote){
-    	workout = new Workout(name, duration, workoutnote);
+    public void registerWorkout(Workout workout, int duration, int shape, int performance, String weatherconditions, String airconditions, String numberOfSpectators, String workoutnote){
     	// save something to logentry in sql??
         workout.regWorkout(duration, shape, performance, workoutnote, weatherconditions, airconditions, numberOfSpectators);
+        workout.save(conn);
     }
     
     public void addExercise(Workout workout, Exercise exercise){
     	exercise.getName();
-    	String sql = "INSERT INTO exerciseinworkout (" + stringify(exercise.getName()) + "," + workout.getId() + ")";
+    	System.out.println("inserting: " + exercise.getName() +", " + workout.getId());
+
+    	String sql = "INSERT INTO EXERCISEINWORKOUT (exercisename, workoutid)"
+    			+ " VALUES(" + "\'" + exercise.getName()+ "\'" + "," + +workout.getId() + ");";
     	insert(conn, sql);
     }
-    
+    // Get exercises in workout
     public ArrayList<Exercise> getExercises(Workout workout, ExerciseCtrl eCtrl){
-    	String sql = "SELECT * FROM exerciseinworkout WHERE workoutid = " + workout.getId(); // FIX THIS  - not correct sql
-    	ArrayList<Exercise> list = eCtrl.getExercises(sql);
+    	String sql = "SELECT e.*"
+    			+ " FROM exercise e"
+    			+ " INNER JOIN exerciseinworkout ew "
+    			+ " ON e.name = ew.exercisename"
+    			+ " WHERE ew.workoutid =\'" + workout.getId() +"\'";//"SELECT exercise FROM exerciseinworkout WHERE workoutid = " + workout.getId(); // FIX THIS  - not correct sql
     	
- 
+    	ArrayList<Exercise> list = eCtrl.getExercises(sql);
     	return list;
     }
     /*
@@ -105,6 +111,8 @@ public class WorkoutCtrl extends DBConn {
     }
     
     
+    
+    
     // SPECIAL SELECTION:
     public ArrayList<Workout> getAll(){
     	String sql = "SELECT * FROM workout";
@@ -115,13 +123,27 @@ public class WorkoutCtrl extends DBConn {
     	String sql = "SELECT MAX(workoutTime) FROM workout";
     	return getWorkouts(sql).get(0);
     }
+
     public String lastWeekSummary(){  // returns a formatted summary
-    	String sql = "SELECT * FROM workout WHERE workouttime >= " + stringify(this.getWeekStart()) + " AND workouttime <= " + stringify(this.getNowString()) + "";
+    	String sql = "SELECT * FROM workout WHERE workouttime >= " + "\'" + this.getWeekStart() +"\'" + " AND workouttime <= " + "\'" +this.getNowString()+ "\'" + "";
     	workouts = getWorkouts(sql);
     	System.out.println("doing sql: " + sql); // debugging
         String summary = "Last weeks workouts: " + workouts.toString();
     	
         return summary;
+    }
+    public Workout getWorkout(String name){
+    	name = name.toUpperCase();
+    	String sql = "SELECT * FROM workout WHERE name=\'" + name + "\'";
+    	System.out.println("Executing: " + sql);
+    	try{
+    	return getWorkouts(sql).get(0);
+    	}
+    	catch (IndexOutOfBoundsException e) {
+    	    System.err.println("IndexOutOfBoundsException: " + e.getMessage());
+    	}
+    	return null;
+
     }
 
     // HELPERS

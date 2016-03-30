@@ -27,7 +27,7 @@ public class Workout extends ActiveDomainObject {
     public Workout (int id, String name, boolean isTemplate, Date workoutTime, int duration, int shape, 
 	int performance, String workoutnote, String weatherconditions, String airconditions, String numberOfSpectators){ // Create new "Workout type" - for construction from database
 			this.id = id;
-			this.name = name;
+			this.name = name.toLowerCase();
 			this.isTemplate = isTemplate;
 			this.workoutTime = workoutTime;
 			this.duration = duration;
@@ -40,7 +40,7 @@ public class Workout extends ActiveDomainObject {
     }
     
     public Workout (String name, int duration, String workoutnote){ // Create new "Workout type" - for construction by user
-			this.name = name;
+			this.name = name.toLowerCase();
 			this.isTemplate = true;
 			this.duration = duration;
 			this.workoutnote = workoutnote;
@@ -78,7 +78,7 @@ public class Workout extends ActiveDomainObject {
             while (rs.next()) {
 
             	id = rs.getInt("ID");
-            	name = rs.getString("name");
+            	name = rs.getString("name").toLowerCase();
             	isTemplate = rs.getBoolean("isTemplate");
             	workoutTime = rs.getDate("workoutTime");
             	duration = rs.getInt("duration");
@@ -127,8 +127,17 @@ public class Workout extends ActiveDomainObject {
     	str = "\"" + str + "\"";
     	return str;
     }
+
 	public String getNowString(){
 		String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new java.util.Date());
+		return timeStamp;
+	}
+	
+	public String getWeekStart(){
+		long millis = System.currentTimeMillis();
+		long lastWeekMillis = millis - 604800000;
+		Date date=new Date(lastWeekMillis);
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(date);
 		return timeStamp;
 	}
     
